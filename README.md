@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/images/logo.jpg" alt="Statesman Logo" width="600" />
+</p>
+
 # Statesman: A Computational Laboratory for Comparative Geopolitics, Statecraft, and Urban Power Centers
 
 [![Ruby](https://img.shields.io/badge/Ruby-3.4%2B-CC342D?logo=ruby&logoColor=white)](https://www.ruby-lang.org/)
