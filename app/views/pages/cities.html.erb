@@ -1,0 +1,30 @@
+<% content_for :title, "Cities | Statesman" %>
+
+<%= turbo_stream_from PopulateCitiesJob::STREAM_NAME %>
+
+<div class="w-full max-w-6xl mx-auto space-y-8 pb-16">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between border-b border-slate-200 pb-6">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-slate-900">Cities</h1>
+      <p class="mt-2 text-sm text-slate-600">
+        Explore civic power centers, commercial ports, and strategic metropolitan hubs across cataloged countries.
+      </p>
+    </div>
+
+    <div class="shrink-0">
+      <%= render "pages/populate_controls",
+                 target_id: "cities_populate_controls",
+                 action_path: populate_cities_path,
+                 idle_label: "Populate Cities",
+                 running_label: "Discovering Cities...",
+                 running: false,
+                 status_message: notice,
+                 status_kind: (notice.present? ? :info : nil) %>
+    </div>
+  </header>
+
+  <%= render "pages/cities_list",
+             country_groups: @country_groups,
+             total_cities_count: @total_cities_count,
+             countries_count: @countries_count %>
+</div>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Statesman" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Statesman">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-slate-50/40 text-slate-900">
+    <header class="border-b border-slate-200 bg-white">
+      <nav class="container mx-auto px-5" aria-label="Primary">
+        <div class="mx-auto flex h-14 max-w-6xl items-center justify-between">
+          <%= link_to "Statesman", root_path, class: "text-base font-bold tracking-tight text-slate-900" %>
+          <div class="flex items-center gap-1">
+            <%= link_to "Continents",
+                        root_path,
+                        class: [
+                          "rounded-md px-3 py-1.5 text-sm font-medium transition",
+                          current_page?(root_path) ? "bg-indigo-50 text-indigo-700" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                        ].join(" ") %>
+            <%= link_to "Countries",
+                        countries_path,
+                        class: [
+                          "rounded-md px-3 py-1.5 text-sm font-medium transition",
+                          current_page?(countries_path) ? "bg-indigo-50 text-indigo-700" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                        ].join(" ") %>
+            <%= link_to "Cities",
+                        cities_path,
+                        class: [
+                          "rounded-md px-3 py-1.5 text-sm font-medium transition",
+                          current_page?(cities_path) ? "bg-indigo-50 text-indigo-700" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                        ].join(" ") %>
+            <%= link_to "Clusters",
+                        clusters_path,
+                        class: [
+                          "rounded-md px-3 py-1.5 text-sm font-medium transition",
+                          request.path.start_with?("/cluster") ? "bg-indigo-50 text-indigo-700" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                        ].join(" ") %>
+            <%= link_to "Reports",
+                        cluster_reports_path,
+                        class: [
+                          "rounded-md px-3 py-1.5 text-sm font-medium transition",
+                          request.path.start_with?("/reports") ? "bg-indigo-50 text-indigo-700" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                        ].join(" ") %>
+            <%= link_to "Settings",
+                        settings_path,
+                        class: [
+                          "rounded-md px-3 py-1.5 text-sm font-medium transition",
+                          current_page?(settings_path) ? "bg-indigo-50 text-indigo-700" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                        ].join(" ") %>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container mx-auto mt-10 px-5 flex">
+      <%= yield %>
+    </main>
+
+    <%= turbo_frame_tag "cluster_modal" %>
+  </body>
+</html>
