@@ -1,0 +1,35 @@
+<% target_id = local_assigns.fetch(:target_id, "populate_controls") %>
+<% action_path = local_assigns.fetch(:action_path, populate_continents_path) %>
+<% idle_label = local_assigns.fetch(:idle_label, "Populate Continents") %>
+<% running_label = local_assigns.fetch(:running_label, "Discovering Continents...") %>
+
+<div id="<%= target_id %>" class="flex flex-col items-start sm:items-end gap-3">
+  <%= button_to action_path,
+                method: :post,
+                disabled: running,
+                class: [
+                  "inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition",
+                  running ? "bg-indigo-400 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-500 cursor-pointer"
+                ].join(" ") do %>
+    <% if running %>
+      <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+      </svg>
+      <span><%= running_label %></span>
+    <% else %>
+      <span><%= idle_label %></span>
+    <% end %>
+  <% end %>
+
+  <% if status_message.present? %>
+    <% banner_classes = case status_kind&.to_sym
+                        when :success then "bg-emerald-50 text-emerald-800 border-emerald-200"
+                        when :error then "bg-rose-50 text-rose-800 border-rose-200"
+                        else "bg-indigo-50 text-indigo-800 border-indigo-200"
+                        end %>
+    <p role="status" class="rounded-md border px-3 py-1.5 text-xs font-medium <%= banner_classes %>">
+      <%= status_message %>
+    </p>
+  <% end %>
+</div>
