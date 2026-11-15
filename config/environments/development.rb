@@ -74,11 +74,14 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 
-  # Allow requests from Tailscale IP ranges, MagicDNS hostnames, and custom development hosts
+  # Allow requests from Tailscale IP ranges, MagicDNS hostnames, and custom development hosts.
+  # Rails wraps these regexes in \A...\z (plus an optional port), so they must not
+  # anchor themselves, and the MagicDNS pattern must cover multi-label names such
+  # as host.tailnet-name.ts.net.
   config.hosts << IPAddr.new("100.64.0.0/10")
   config.hosts << IPAddr.new("fd7a:115c:a1e0::/48")
-  config.hosts << /[a-z0-9-]+\.ts\.net/
-  config.hosts << /^[a-z0-9_-]+$/i
+  config.hosts << /[a-z0-9-]+(?:\.[a-z0-9-]+)*\.ts\.net/
+  config.hosts << /[a-z0-9_-]+/i
   if ENV["RAILS_DEVELOPMENT_HOSTS"].present?
     ENV["RAILS_DEVELOPMENT_HOSTS"].split(",").map(&:strip).each do |host|
       config.hosts << host
