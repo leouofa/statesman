@@ -160,6 +160,13 @@ Cosine Distance d(u, v) = 1 - (u · v) / (||u|| * ||v||)
 
 ## 4. Installation & Local Laboratory Setup
 
+> [!TIP]
+> **Prefer running with Docker?** You can run the entire development stack (Rails on port 3003, Sidekiq, Tailwind watcher, Redis, and PostgreSQL with pgvector) in Docker Compose:
+> ```sh
+> docker compose up -d --build
+> ```
+> See [docs/DOCKER.md](docs/DOCKER.md) for full details, Tailscale access, volume persistence, and everyday commands.
+
 ### Prerequisites
 
 - **Ruby 3.4+** and **Rails 8.1+**
